@@ -1,3 +1,5 @@
+import datetime
+
 from src.database.create_db import MainBase
 from sqlalchemy.orm import mapped_column, Mapped, relationship
 from sqlalchemy import Integer, String, DATE
@@ -6,16 +8,15 @@ from typing import Dict
 
 
 class User(MainBase):
-    """
-    Объект - User
-    """
+    __tablename__ = "user"
 
+    """ Объект - User """
     id_user: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     name_user: Mapped[str] = mapped_column(String, nullable=False)
     email_user: Mapped[str] = mapped_column(String)
     password: Mapped[str] = mapped_column(String(35))
-    date_reg: Mapped[DATE] = mapped_column(DATE)
-    user = relationship("Recipe", back_populates="recipes")
+    date_reg: Mapped[datetime.datetime] = mapped_column(DATE)
+    recipes = relationship("recipe", back_populates="recipes")
 
     def read_model(self) -> Dict:
         """

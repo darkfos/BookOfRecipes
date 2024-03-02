@@ -8,23 +8,22 @@ from typing import NewType, Any, Dict
 
 
 class Recipe(MainBase):
-    """
-        Объект - рецепт
-    """
+    __tablename__ = "recipe"
 
+    """ Объект - рецепт """
     id_recipe: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     title_recipe: Mapped[str] = mapped_column(String, nullable=False)
     description: Mapped[str] = mapped_column(String, nullable=False)
     complexity: Mapped[str] = mapped_column(String, default="легкий")
     time_cook: Mapped[int] = mapped_column(Integer, default=10)
+    date_create: Mapped[datetime.datetime] = mapped_column(DATE, default=datetime.datetime.now().date())
 
     # Таблица Photo
-    date_create: Mapped[DATE] = mapped_column(DATE, default=datetime.datetime.now().date())
-    photo_us = relationship("PhotoRecipe", back_populates="photo")
+    photo_us = relationship("photorecipe", back_populates="photo")
 
     # Таблица User
-    id_user: Mapped[int] = mapped_column(Integer, ForeignKey("User.id_user"))
-    recipes = relationship("User", back_populates="user")
+    user_id: Mapped[int] = mapped_column(Integer, ForeignKey("user.id_user"))
+    recipes = relationship("user", back_populates="user_post")
 
 
     def read_model(self) -> Dict:
@@ -39,5 +38,5 @@ class Recipe(MainBase):
             "complexity": self.complexity,
             "time_cook": self.time_cook,
             "date_create": self.date_create,
-            "id_user": self.id_user
+            "id_user": self.user_id
         }

@@ -6,14 +6,13 @@ from typing import Dict
 
 
 class PhotoRecipe(MainBase):
-    """
-        Объект - ФотоРецепта
-    """
+    __tablename__ = "photorecipe"
 
+    """ Объект - ФотоРецепта """
     id_photorec: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    photo: BINARY = mapped_column(BINARY)
-    id_recipe: Mapped[int] = mapped_column(Integer, ForeignKey("Recipe.id_recipe"))
-    photo = relationship("Recipe", back_populates="photo_us")
+    photo: Mapped[bytes] = mapped_column(BINARY)
+    recipe_id: Mapped[int] = mapped_column(Integer, ForeignKey("recipe.id_recipe"))
+    photo = relationship("recipe", back_populates="photo_us")
 
 
     def read_model(self) -> Dict:
@@ -24,5 +23,5 @@ class PhotoRecipe(MainBase):
         return {
             "id_photorec": self.id_photorec,
             "photo": self.photo,
-            "id_recipe": self.id_recipe
+            "id_recipe": self.recipe_id
         }
