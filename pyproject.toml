@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "bookofrecipes"
+version = "0.1.0"
+description = "Веб-приложения для записей кулинарных рецептов"
+authors = ["darkfos <153763364+darkfos@users.noreply.github.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.110.0"
+SQLAlchemy = "^2.0.27"
+uvicorn = {extras = ["standart"], version = "^0.27.1"}
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
